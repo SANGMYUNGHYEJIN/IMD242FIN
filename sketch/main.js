@@ -6,8 +6,16 @@ const aspectH = 3;
 const container = document.body.querySelector('.container-canvas');
 // 필요에 따라 이하에 변수 생성.
 
-const { Body, Bodies, Engine, Composite, Mouse, MouseConstraint, Vector } =
-  Matter;
+const {
+  Body,
+  Bodies,
+  Engine,
+  Composite,
+  Mouse,
+  MouseConstraint,
+  Vector,
+  Events,
+} = Matter;
 let engine, world;
 let boxes = [];
 let walls = [];
@@ -64,6 +72,27 @@ function setup() {
     },
   });
   Composite.add(world, mouseConstraint);
+
+  Events.on(engine, 'collisionStart', (event) => {
+    const pairs = event.pairs;
+    pairs.forEach((pair) => {
+      const { bodyA, bodyB } = pair;
+
+      if (boxes.includes(bodyA)) {
+        bodyA.color = getRandomPastelColor();
+      }
+      if (boxes.includes(bodyB)) {
+        bodyB.color = getRandomPastelColor();
+      }
+    });
+  });
+}
+
+function getRandomPastelColor() {
+  const r = Math.round(random(127, 255));
+  const g = Math.round(random(127, 255));
+  const b = Math.round(random(127, 255));
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
 function mousePressed() {
@@ -96,7 +125,7 @@ function draw() {
   Engine.update(engine);
 
   boxes.forEach((aBox) => {
-    console.log('아니대체뭐가문제임:', aBox.color);
+    console.log('아니대체뭐가문제임:', aBox.color); //자꾸 색깔이 안 되어서 콘솔 넣어봤는데 rgb값이 소수점자리까지 내려갔던게 문제였던 거 같긴함.
     if (aBox.color) {
       const [r, g, b] = aBox.color.match(/\d+/g).map(Number);
       fill(r, g, b);
@@ -113,7 +142,7 @@ function draw() {
 
   walls.forEach((aBody) => {
     fill(40);
-    stroke(0);
+    noStroke();
     beginShape();
     aBody.vertices.forEach((aVertex) => {
       vertex(aVertex.x, aVertex.y);
