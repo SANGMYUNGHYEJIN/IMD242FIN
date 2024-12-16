@@ -79,20 +79,20 @@ function setup() {
       const { bodyA, bodyB } = pair;
 
       if (boxes.includes(bodyA)) {
-        bodyA.color = getRandomPastelColor();
-      }
+        bodyA.color = rpc();
+      } //aksdlfbodyAdprp cndehfgoTekaus?
       if (boxes.includes(bodyB)) {
-        bodyB.color = getRandomPastelColor();
+        bodyB.color = rpc();
       }
     });
   });
 }
 
-function getRandomPastelColor() {
+function rpc() {
   const r = Math.round(random(127, 255));
   const g = Math.round(random(127, 255));
   const b = Math.round(random(127, 255));
-  return `rgb(${r}, ${g}, ${b})`;
+  return `rgb(${r}, ${g}, ${b})`; //xpavmffltflxjfjf
 }
 
 function mousePressed() {
