@@ -73,6 +73,8 @@ function setup() {
   });
   Composite.add(world, mouseConstraint);
 
+  //matter.js event 함수 참고
+  // perplexity 참고
   Events.on(engine, 'collisionStart', (event) => {
     const pairs = event.pairs;
     pairs.forEach((pair) => {
@@ -89,7 +91,7 @@ function setup() {
 }
 
 function rpc() {
-  const r = Math.round(random(127, 255));
+  const r = Math.round(random(127, 255)); //반올림
   const g = Math.round(random(127, 255));
   const b = Math.round(random(127, 255));
   return `rgb(${r}, ${g}, ${b})`; //xpavmffltflxjfjf
@@ -106,7 +108,7 @@ function mousePressed() {
   const sh = random(20, 100);
 
   const box = Bodies.rectangle(mouseX, mouseY, sw, sh, {
-    restitution: 0.6, //통통튀어오르는정도. 크게잡으면막난리남
+    restitution: 0.6, //통통튀어오르는정도. 이정도 상태가 가장 적당한듯
     friction: 0.1,
   });
 
@@ -128,6 +130,7 @@ function draw() {
     console.log('아니대체뭐가문제임:', aBox.color); //자꾸 색깔이 안 되어서 콘솔 넣어봤는데 rgb값이 소수점자리까지 내려갔던게 문제였던 거 같긴함.
     if (aBox.color) {
       const [r, g, b] = aBox.color.match(/\d+/g).map(Number);
+      // perplexity 참고. aBox color가 가진 rgb값을 컴퓨터가 계산할 수 있는 실제 값으로 변경. 그 후 r,g,b에 각각 넣어서 색상을 바꿈.
       fill(r, g, b);
     } else {
       fill('white');
